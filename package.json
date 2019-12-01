@@ -1,0 +1,14 @@
+{
+  "name": "arsus",
+  "version": "1.0.0",
+  "description": "arsip surat sekolah",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Letvinko",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^7.1.2"
+  }
+}

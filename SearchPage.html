@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-storage.js"></script>
+
+    <link rel="icon" href="Logo putih.png">
+    <script type="text/javascript" src="auth.js">
+    </script>
+    <title>Arsus</title>
+    <style>
+      #searchBar{
+        border:1px solid #979797;
+        padding:5px;
+        outline:none;
+        width:45%;
+        margin-left:25%;
+      }
+      #btnSearch{
+        background:#F5F5F5;
+        border:1px solid #979797;
+        padding:10px;
+        outline:none;
+        border-left:none;
+      }
+      .flex{
+        display : flex;
+      }
+      .header{
+        position:static;
+        left:40%;
+        top:5%;
+      }
+      .content{
+        position:static;
+        float:right;
+        margin-right:10%;
+      }
+
+      #searched{
+        width:40%;
+        position:static;
+        margin-top:15%;
+        margin-left:10%;
+        margin-bottom:5%;
+        text-align:center;
+      }
+      #btnHome{
+        border-radius:5px;
+        padding:0px;
+        background-color:#E8E8E8;
+        border:none;
+        transition:.3s;
+      }
+      #btnHome:active{
+        outline:black;
+      }
+      #btnHome:hover{
+       border:2px solid #D0021B;
+       border-radius:9px;
+      }
+      #img:active{
+        box-shadow: 0px 0px 0px 1px rgb(208, 2, 27);
+        animation: anim-shadow .1s forwards;
+      }
+
+      @keyframes anim-shadow{
+        100%{
+          box-shadow: 0px 0px 50px 20px rgb(130, 3, 18 , 0);
+        }
+      }
+
+      #img{
+        width:50px;
+      }
+      div .wrapper {
+        position: fixed;
+        top: 0;
+        padding: 30px 0px;
+        font-size: 20px;
+      }
+      ul{
+        list-style-type:none;
+      }
+      .wrapper{
+        background:#E8E8E8;
+        margin-left:-3%;
+        float:left;
+        display:flex;
+        position:fixed;
+      }
+      .wrapper .siderbar{
+        position:fixed;
+        width:200px;
+        height:90%;
+        paading:30px 0px;
+      }
+      .wrapper .sidebar ul li{
+        padding:10px 10px;
+      }
+      .wrapper .siderbar .footersiderbar{
+        position:absolute;
+        bottom:0;
+      }
+      #footer{
+        width:62px;
+        margin-left:40%;
+        margin-top:200%;
+        margin-bottom:50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="LandingPage">
+      <<div class="wrapper">
+        <div class="sidebar">
+          <ul>
+            <li>
+                <button type="button" name="button1" id="btnHome" class="btn btn-danger"><img id="img" src="assets\Logo putih.png" alt="" onclick="Landing()"></button>
+            </li>
+            <li>
+              <hr style="background-color:black;">
+            </li>
+            <li>
+                <button type="button" name="button2" id="btnHome" class="btn btn-danger"><img id="img" src="assets\Archive Putih.png" alt="" onclick="Archive()"></button>
+            </li>
+            <li>
+                <button type="button" name="button3" id="btnHome" class="btn btn-danger"><img id="img" src="assets\Upload Putih.png" alt="" onclick="Upload()"></button>
+            </li>
+          </ul>
+          <div class="footersiderbar">
+            <img id="footer" src="assets\logo-kemenag.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="header">
+        <button type="button" name="button" class="btn btn-danger" style="margin-right:3%; margin-bottom:3%; float:right" onclick="logout()">Logout</button>
+        <div class="input-group mb-3">
+          <input id="searchBar" type="text" placeholder="Cari Surat">
+          <div class="input-group-append">
+            <button id="btnSearch" type="submit"><img src="assets\musica-searcher.png" alt="" style="width:20px;">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="flex">
+          <div class="form-group" style="padding:40px;">
+            <label for="filter1">Select list:</label>
+            <select class="form-control" id="filter1">
+              <option>Nama</option>
+              <option>Tahun</option>
+              <option>Tipe</option>
+              <option>Kepentingan</option>
+            </select>
+          </div>
+          <div class="form-group" style="padding:40px;">
+            <label for="filter2">Select list:</label>
+            <select class="form-control" id="filter2">
+              <option>Nama</option>
+              <option>Tahun</option>
+              <option>Tipe</option>
+              <option>Kepentingan</option>
+            </select>
+          </div>
+          <div class="form-group" style="padding:40px;">
+            <label for="filter3">Select list:</label>
+            <select class="form-control" id="filter3">
+              <option>Nama</option>
+              <option>Tahun</option>
+              <option>Tipe</option>
+              <option>Kepentingan</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div id="searched" class="card">
+        <center><img src="assets\Surat Telkom.png" alt="" style="width:190px;"></center>
+        <div class="card-body">
+          <h4 class="card-title">Judul Surat</h4>
+          <p class="card-text">Keterangan Surat</p>
+          <a href="#" class="btn btn-primary" onclick="Detail()">Lihat Detail</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      function logout(){
+        window.location.assign("mainwindow.html")
+      }
+      function Archive(){
+        window.location.assign("Archive.html")
+      }
+      function Landing(){
+        window.location.assign("Landingpage.html")
+      }
+      function Upload(){
+        window.location.assign("Upload.html")
+      }
+      function Detail(){
+        window.location.assign("DetailSurat.html")
+      }
+    </script>
+  </body>
+</html>
