@@ -46,7 +46,7 @@
       }
 
       #searched{
-        width:40%;
+        width:100%;
         position:static;
         margin-top:15%;
         margin-left:10%;
@@ -92,7 +92,7 @@
       }
       .wrapper{
         background:#E8E8E8;
-        margin-left:-3%;
+        margin-left:-2%;
         float:left;
         display:flex;
         position:fixed;
@@ -116,6 +116,18 @@
         margin-top:200%;
         margin-bottom:50%;
       }
+      @media only screen and (min-height: 670px){
+        #footer{
+          margin-top:350%;
+          margin-bottom:500%;
+        }
+      }
+      @media only screen and (min-height: 854px){
+        #footer{
+          margin-top:500%;
+          margin-bottom:1000%;
+        }
+      }
     </style>
   </head>
   <body>
@@ -124,13 +136,13 @@
         <div class="sidebar">
           <ul>
             <li>
-                <button type="button" name="button1" id="btnHome" class="btn btn-danger"><img id="img" src="assets\Logo putih.png" alt="" onclick="Landing()"></button>
+                <button type="button" name="button1" id="btnHome" class="btn btn-danger"><img id="img" src="assets\Logo Putih.png" alt="" onclick="Landing()"></button>
             </li>
             <li>
               <hr style="background-color:black;">
             </li>
             <li>
-                <button type="button" name="button2" id="btnHome" class="btn btn-danger"><img id="img" src="assets\Archive Putih.png" alt="" onclick="Archive()"></button>
+                <button type="button" name="button2" id="btnHome" class="btn btn-danger"><img id="img" src="assets\Archive Merah.png" alt="" onclick="Archive()"></button>
             </li>
             <li>
                 <button type="button" name="button3" id="btnHome" class="btn btn-danger"><img id="img" src="assets\Upload Putih.png" alt="" onclick="Upload()"></button>
@@ -141,7 +153,7 @@
           </div>
         </div>
       </div>
-      <div class="header">
+      <!-- <div class="header">
         <button type="button" name="button" class="btn btn-danger" style="margin-right:3%; margin-bottom:3%; float:right" onclick="logout()">Logout</button>
         <div class="input-group mb-3">
           <input id="searchBar" type="text" placeholder="Cari Surat">
@@ -150,8 +162,22 @@
             </button>
           </div>
         </div>
+      </div> -->
+      <button type="button" name="button" class="btn btn-danger" style="margin-right:3%; margin-bottom:3%; float:right" onclick="logout()">Logout</button>
+      <div class="container" style="padding: 0px;">
+        <form class="#" action="index.html" method="post" id="formSearch">
+          <div class="row" style="">
+            <div class="col-12" style="">
+              <div class="input-group" style="">
+                <input type="text" placeholder="Cari Surat" style="width:90%" class="form-control" id="inputSearch">
+                <button id="" type="submit"><img src="assets\musica-searcher.png" alt="" style="width:20px;">
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="content">
+      <!-- <div class="content">
         <div class="flex">
           <div class="form-group" style="padding:40px;">
             <label for="filter1">Select list:</label>
@@ -181,13 +207,17 @@
             </select>
           </div>
         </div>
-      </div>
-      <div id="searched" class="card">
+      </div> -->
+      <!-- <div id="searched" class="card">
         <center><img src="assets\Surat Telkom.png" alt="" style="width:190px;"></center>
         <div class="card-body">
           <h4 class="card-title">Judul Surat</h4>
           <p class="card-text">Keterangan Surat</p>
           <a href="#" class="btn btn-primary" onclick="Detail()">Lihat Detail</a>
+        </div>
+      </div> -->
+      <div class="container" style="margin-top:5%">
+        <div class="row" id="divRow">
         </div>
       </div>
     </div>
@@ -207,6 +237,68 @@
       function Detail(){
         window.location.assign("DetailSurat.html")
       }
+
+      const formSearch = document.querySelector('#formSearch');
+      formSearch.addEventListener('submit',(e) => {
+        e.preventDefault();
+
+        var search = formSearch['inputSearch'].value;
+        console.log(search);
+
+        firebase.database().ref("arsip_surat").orderByChild('namasurat')
+                 .startAt(search)
+                 .endAt(search+"\uf8ff").on('value', function (snapshot){
+                   var child = [];
+                   snapshot.forEach(function(childSnapshot){
+                     child.push(childSnapshot.val())
+                   })
+                   console.log(child)
+                     document.getElementById("divRow").innerHTML = "";
+                   for(var i = 0; i < child.length;i++){
+
+                     var divCol = document.createElement("div")
+                     divCol.className = "col-4";
+                     divCol.style.marginBottom = "20px";
+                     document.getElementById("divRow").appendChild(divCol);
+
+                     var divCard = document.createElement("div")
+                     divCard.className = "card";
+                     divCard.id = "suratarsip"
+                     divCard.style.width = "350px";
+                     divCol.appendChild(divCard);
+
+                     var tagCenter = document.createElement("center")
+                     divCard.appendChild(tagCenter);
+
+                     var img = document.createElement("img");
+                     img.src = child[i].previewImage;
+                     img.width = "300";
+                     img.height = "320";
+                     tagCenter.appendChild(img);
+
+                     var divBody = document.createElement("div")
+                     divBody.className = "card-body";
+                     divCard.appendChild(divBody);
+
+                     var title = document.createElement("h4")
+                     title.className = "card-title";
+                     title.innerHTML = child[i].namasurat
+                     divBody.appendChild(title);
+
+                     var comment = document.createElement("p")
+                     comment.className = "card-text";
+                     comment.innerHTML = child[i].comment
+                     divBody.appendChild(comment);
+
+                     var detail = document.createElement("a")
+                     detail.className = "btn btn-primary";
+                     detail.href = "javascript:Detail("+child[i].namasurat+")"
+                     detail.innerHTML = "Lihat Detail"
+                     divBody.appendChild(detail);
+                   }
+        })
+      })
+
     </script>
   </body>
 </html>

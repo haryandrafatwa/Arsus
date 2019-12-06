@@ -51,6 +51,7 @@
         background-color:#E8E8E8;
         border:none;
         transition:.3s;
+        margin-left: 9%;
       }
       #btnHome:active{
         outline:black;
@@ -84,7 +85,7 @@
       }
       .wrapper{
         background:#E8E8E8;
-        margin-left:-3%;
+        margin-left:-2%;
         float:left;
         display:flex;
         position:fixed;
@@ -93,7 +94,7 @@
         position:fixed;
         width:200px;
         height:90%;
-        paading:30px 0px;
+        padding:30px 0px;
       }
       .wrapper .sidebar ul li{
         padding:10px 10px;
@@ -104,9 +105,25 @@
       }
       #footer{
         width:62px;
-        margin-left:40%;
+        margin-left:43%;
         margin-top:200%;
         margin-bottom:50%;
+      }
+
+      #searchBarHome:hover{
+        cursor: text;
+      }
+      @media only screen and (min-height: 670px){
+        #footer{
+          margin-top:350%;
+          margin-bottom:500%;
+        }
+      }
+      @media only screen and (min-height: 854px){
+        #footer{
+          margin-top:500%;
+          margin-bottom:1000%;
+        }
       }
     </style>
   </head>
@@ -133,28 +150,8 @@
           </div>
         </div>
       </div>
-      <div class="headerHome">
-          <button type="button" name="button" class="btn btn-danger" style="margin-right:3%; margin-bottom:3%; margin-top:1%; float:right" onclick="logout()">Logout</button>
-        <div class="input-group mb-3">
-          <input id="searchBarHome" type="text" placeholder="Cari Surat">
-          <div class="input-group-append">
-            <button id="btnSearchHome" type="submit"><img src="assets\musica-searcher.png" alt="" style="width:20px;">
-            </button>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="contentSurat">
-        <div id="SuratLanding" class="card">
-          <center><img src="assets\Surat Telkom.png" alt=""></center>
-          <div class="card-body">
-            <h4 class="card-title">Judul Surat</h4>
-            <p class="card-text">Keterangan Surat</p>
-            <a href="#" class="btn btn-primary" onclick="Detail()">Lihat Detail</a>
-          </div>
-        </div>
-      </div> -->
-      <div class="container" style="margin-left: 5%; text-align:center;">
-        <div class="row" id="divRow">
+      <div class="container" style="">
+        <div class="row" id="divRow" style="margin-top:50px">
         </div>
       </div>
     </div>
@@ -181,6 +178,7 @@
 
             var divCol = document.createElement("div")
             divCol.className = "col-4";
+            divCol.style.marginBottom = "50px"
             document.getElementById("divRow").appendChild(divCol);
 
             var divCard = document.createElement("div")
@@ -219,6 +217,10 @@
             divBody.appendChild(detail);
           }
         })
+      }
+
+      document.getElementById("searchBar").onclick = function(){
+        window.location = "SearchPage.html"
       }
     </script>
   </body>
